@@ -1,0 +1,21 @@
+name: Deploy and Migrate on Railway
+
+on:
+  push:
+    branches:
+      - main  # Запускается при пуше в main (можешь поменять)
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run migrations on Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          npm install -g @railway/cli
+          railway login --token=$RAILWAY_TOKEN
+          railway link
+          railway run "php artisan migrate --force"
+          railway run "php artisan db:seed --class=SiteContentSeeder"
