@@ -76,7 +76,11 @@
                 <p><strong>{{ \App\Models\SiteContent::get('purchase_info_4') }}</strong></p>
                 <p><strong>{{ \App\Models\SiteContent::get('purchase_info_5') }}</strong></p>
                 <p class="note">{{ \App\Models\SiteContent::get('purchase_note') }}</p>
-                <div class="price"><span class="price-currency">₽</span> {{ \App\Models\SiteContent::get('purchase_price') }}</div>
+                <div class="price">
+                    {{ \App\Models\SiteContent::get('purchase_price_1') }} <br />
+                    {{ \App\Models\SiteContent::get('purchase_price_2') }} <br />
+                    {{ \App\Models\SiteContent::get('purchase_price_3') }}
+                </div>
                 <p style="text-align: center; color: #999; margin-top: 20px;">{{ \App\Models\SiteContent::get('purchase_payment_methods') }}</p>
             </div>
             <!-- Форма оплаты остается статичной, но использует динамические маршруты -->

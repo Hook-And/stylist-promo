@@ -11,9 +11,9 @@ class SiteContentSeeder extends Seeder
     {
         $contents = [
             // Header Section
-            ['key' => 'page_title', 'value' => 'Канал-гайд для девушек в Telegram', 'type' => 'text', 'section' => 'header', 'description' => 'Заголовок страницы (title tag)'],
-            ['key' => 'header_title', 'value' => 'КАНАЛ-ГАЙД ДЛЯ ДЕВУШЕК', 'type' => 'text', 'section' => 'header', 'description' => 'Главный заголовок'],
-            ['key' => 'header_subtitle', 'value' => 'в Telegram Магдалена Великая', 'type' => 'text', 'section' => 'header', 'description' => 'Подзаголовок'],
+            ['key' => 'page_title', 'value' => 'Осенне-зимний канал-гайд для девушек в Telegram', 'type' => 'text', 'section' => 'header', 'description' => 'Заголовок страницы (title tag)'],
+            ['key' => 'header_title', 'value' => 'ОСЕННЕ-ЗИМНИЙ КАНАЛ-ГАЙД ДЛЯ ДЕВУШЕК', 'type' => 'text', 'section' => 'header', 'description' => 'Главный заголовок'],
+            ['key' => 'header_subtitle', 'value' => 'в Telegram Magdalena Velikaya', 'type' => 'text', 'section' => 'header', 'description' => 'Подзаголовок'],
             ['key' => 'header_quote', 'value' => '«Хочу, чтобы как можно больше людей выглядели стильно, самовыражались и не запрещали себе быть собой, как внешне, так и внутренне»', 'type' => 'text', 'section' => 'header', 'description' => 'Цитата'],
             ['key' => 'header_description', 'value' => 'Канал для всех, кто хочет быть стильными, проявленными, свободными и выражать себя через внешний стиль!', 'type' => 'text', 'section' => 'header', 'description' => 'Описание'],
 
@@ -39,7 +39,9 @@ class SiteContentSeeder extends Seeder
             ['key' => 'purchase_info_4', 'value' => 'Ответы на вопросы: в комментариях.', 'type' => 'text', 'section' => 'purchase', 'description' => 'Информация 4'],
             ['key' => 'purchase_info_5', 'value' => 'Диапазон цен в канале: 5 000-2 000 000₽.', 'type' => 'text', 'section' => 'purchase', 'description' => 'Информация 5'],
             ['key' => 'purchase_note', 'value' => 'После оплаты вас сразу перебросит в Telegram-канал, не закрывайте страницу!', 'type' => 'text', 'section' => 'purchase', 'description' => 'Важное замечание'],
-            ['key' => 'purchase_price', 'value' => '5000', 'type' => 'text', 'section' => 'purchase', 'description' => 'Цена'],
+            ['key' => 'purchase_price_1', 'value' => '- 1 ноября – 31 декабря: 5000 ₽.', 'type' => 'text', 'section' => 'purchase', 'description' => 'Цена 1 месяца'],
+            ['key' => 'purchase_price_2', 'value' => '- Декабрь: 3000 ₽.', 'type' => 'text', 'section' => 'purchase', 'description' => 'Цена 2 месяца'],
+            ['key' => 'purchase_price_3', 'value' => '- Январь: 1000 ₽.', 'type' => 'text', 'section' => 'purchase', 'description' => 'Цена 3 месяца'],
             ['key' => 'purchase_payment_methods', 'value' => 'Способы оплаты: российские и зарубежные карты', 'type' => 'text', 'section' => 'purchase', 'description' => 'Способы оплаты'],
             ['key' => 'purchase_email', 'value' => 'madgapikland@gmail.com', 'type' => 'email', 'section' => 'purchase', 'description' => 'Email для вопросов'],
 
