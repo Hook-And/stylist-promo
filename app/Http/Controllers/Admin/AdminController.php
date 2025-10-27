@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SiteContent;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
+
 class AdminController extends Controller
 {
     /**
@@ -13,10 +13,6 @@ class AdminController extends Controller
      */
     public function index()
     {
-        Artisan::call('db:seed', [
-            '--class' => 'Database\\Seeders\\SiteContentSeeder', // Укажи свой класс сидера
-            '--force' => true, // нужно, если в production
-        ]);
         $sections = [
             'header' => 'Заголовок',
             'purpose' => 'Цель канала',
