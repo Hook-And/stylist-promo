@@ -24,9 +24,14 @@
         <div class="container">
             <h2>{{ \App\Models\SiteContent::get('purpose_title') }}</h2>
             <div class="purpose-content">
+                <div class="purpose-text">{{ \App\Models\SiteContent::get('purpose_text_1') }}</div>
+                <div class="purpose-text">{{ \App\Models\SiteContent::get('purpose_text_2') }}</div>
+                <div class="purpose-text">{{ \App\Models\SiteContent::get('purpose_text_3') }}</div>
+                <div class="purpose-text">{{ \App\Models\SiteContent::get('purpose_text_4') }}</div>
                 <div class="purpose-item">{{ \App\Models\SiteContent::get('purpose_item_1') }}</div>
                 <div class="purpose-item">{{ \App\Models\SiteContent::get('purpose_item_2') }}</div>
                 <div class="purpose-item">{{ \App\Models\SiteContent::get('purpose_item_3') }}</div>
+                <div class="purpose-item">{{ \App\Models\SiteContent::get('purpose_item_4') }}</div>
             </div>
             <div style="text-align: center; margin-top: 50px;">
                 <a href="#purchase" class="btn">Купить</a>
@@ -58,6 +63,9 @@
                 <div class="content-item">
                     <h3>{{ \App\Models\SiteContent::get('content_item_3') }}</h3>
                 </div>
+                <div class="content-item">
+                    <h3>{{ \App\Models\SiteContent::get('content_item_4') }}</h3>
+                </div>
             </div>
             <div style="text-align: center; margin-top: 50px;">
                 <a href="#purchase" class="btn">Купить</a>
@@ -73,8 +81,6 @@
                 <p><strong>{{ \App\Models\SiteContent::get('purchase_info_1') }}</strong></p>
                 <p><strong>{{ \App\Models\SiteContent::get('purchase_info_2') }}</strong></p>
                 <p><strong>{{ \App\Models\SiteContent::get('purchase_info_3') }}</strong></p>
-                <p><strong>{{ \App\Models\SiteContent::get('purchase_info_4') }}</strong></p>
-                <p><strong>{{ \App\Models\SiteContent::get('purchase_info_5') }}</strong></p>
                 <p class="note">{{ \App\Models\SiteContent::get('purchase_note') }}</p>
                 <div class="price">
                     {{ \App\Models\SiteContent::get('purchase_price_1') }} <br />

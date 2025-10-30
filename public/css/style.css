@@ -141,7 +141,7 @@ section h3 {
     margin: 0 auto;
 }
 
-.purpose-item {
+.purpose-item, .purpose-text {
     margin-bottom: 30px;
     padding-left: 40px;
     position: relative;
