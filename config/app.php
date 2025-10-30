@@ -123,4 +123,11 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'paykeeper_server' => env('PAYKEEPER_SERVER'),
+    'paykeeper_login' => env('PAYKEEPER_LOGIN'),
+    'paykeeper_password' => env('PAYKEEPER_PASSWORD'),
+    'paykeeper_secret_key' => env('PAYKEEPER_SECRET_KEY'),
+    'product_price' => env('PRODUCT_PRICE'),
+    'product_name' => env('PRODUCT_NAME'),
+    'telegram_channel_link' => env('https://t.me/+q9UBQdbJbl82NTEy'),
 ];
