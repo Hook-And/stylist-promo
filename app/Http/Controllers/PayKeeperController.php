@@ -46,27 +46,32 @@ class PayKeeperController extends Controller
         $login = config('app.paykeeper_login');
         $password = config('app.paykeeper_password');
         $serviceName = config('app.product_name', 'Продукт');
-
+        $tokenResponse = $response = Http::withBasicAuth($login, $password)
+                ->post("{$serverUrl}/info/settings/token/");
+        $data = $tokenResponse->json();
+        $securityToken = $data['token'];
         $requestData = [
-            'pay_amount' => $payAmount,
+            'pay_amount' => number_format($payAmount, 2, '.', ''),
             'orderid' => $orderId,
             'service_name' => $serviceName,
             'client_email' => $validatedData['email'], 
             'client_phone' => $validatedData['phone'], 
-            'client_name' => $validatedData['name'],   
+            'clientid' => $validatedData['name'],   
             // *** ОПТИМАЛЬНО: client_return_url ведет на отдельный маршрут success ***
             'client_return_url' => route('paykeeper.success'), 
+            'token' => $securityToken,
         ];
 
         try {
-            $response = Http::withBasicAuth($login, $password)
+            $response = Http::asForm()
+                ->withBasicAuth($login, $password)
                 ->post("{$serverUrl}/change/invoice/preview/", $requestData);
 
             $data = $response->json();
 
             if ($response->successful() && isset($data['invoice_id'])) {
                 $invoiceId = $data['invoice_id'];
-                $paymentLink = "{$serverUrl}/bill/{$invoiceId}/";
+                $paymentLink = "{$serverUrl}/bill/{$invoiceId}?pstype=sbp_default";
 
                 Log::info("PayKeeper: Payment initiated for Order ID: {$orderId}, Invoice ID: {$invoiceId}");
 
