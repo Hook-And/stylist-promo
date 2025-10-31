@@ -113,7 +113,7 @@
             <p style="margin-top: 30px; color: #999; font-size: 0.95rem;">Если остались вопросы: <a href="mailto:{{ \App\Models\SiteContent::get('purchase_email') }}" style="color: #fff; text-decoration: underline;">{{ \App\Models\SiteContent::get('purchase_email') }}</a></p>
         </div>
     </section>
-
+<iframe src="https://pikland.server.paykeeper.ru/form/" style="width:100%; height: 800px;"></iframe>
     <!-- Footer -->
     <footer>
         <div class="footer-content">
