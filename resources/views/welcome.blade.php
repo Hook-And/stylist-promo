@@ -54,7 +54,6 @@
                         <li>Верх</li>
                         <li>Низ</li>
                         <li>Платья</li>
-                        <li>Костюмы</li>
                         <li>Обувь</li>
                         <li>Аксессуары</li>
                         <li>Украшения</li>
@@ -65,6 +64,13 @@
                 </div>
                 <div class="content-item">
                     <h3>{{ \App\Models\SiteContent::get('content_item_4') }}</h3>
+                </div>
+                <div class="content-item">
+                    <h3>{{ \App\Models\SiteContent::get('content_item_5') }}</h3>
+                    <ul class="sub-list">
+                        <li>Ответы на вопросы в комментариях</li>
+                        <li>Скидка на мои услуги 30%</li>
+                    </ul>
                 </div>
             </div>
             <div style="text-align: center; margin-top: 50px;">
@@ -83,9 +89,7 @@
                 <p><strong>{{ \App\Models\SiteContent::get('purchase_info_3') }}</strong></p>
                 <p class="note">{{ \App\Models\SiteContent::get('purchase_note') }}</p>
                 <div class="price">
-                    {{ \App\Models\SiteContent::get('purchase_price_1') }} <br />
-                    {{ \App\Models\SiteContent::get('purchase_price_2') }} <br />
-                    {{ \App\Models\SiteContent::get('purchase_price_3') }}
+                    {{ \App\Models\SiteContent::get('purchase_price_1') }}
                 </div>
                 <p style="text-align: center; color: #999; margin-top: 20px;">{{ \App\Models\SiteContent::get('purchase_payment_methods') }}</p>
             </div>
