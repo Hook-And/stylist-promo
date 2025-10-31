@@ -129,5 +129,5 @@ return [
     'paykeeper_secret_key' => env('PAYKEEPER_SECRET_KEY'),
     'product_price' => env('PRODUCT_PRICE'),
     'product_name' => env('PRODUCT_NAME'),
-    'telegram_channel_link' => env('https://t.me/+q9UBQdbJbl82NTEy'),
+    'telegram_channel_link' => env('TELEGRAM_CHANNEL_LINK'),
 ];
