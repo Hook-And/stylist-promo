@@ -171,7 +171,7 @@ class PayKeeperController extends Controller
             $telegramLink = config('app.telegram_channel_link');
             // Перенаправление пользователя в Telegram-канал
             Log::info('PayKeeper: User redirected to Telegram channel.');
-            return view('redirect', compact('telegramLink'));
+            return redirect()->away($telegramLink);
         } elseif (empty($purchase) || $purchase->status === 'failed') {
             abort(404);
         }
