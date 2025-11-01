@@ -164,16 +164,10 @@ class PayKeeperController extends Controller
         // уже получил статус 'success' от callback-а.
         // Однако, для моментального редиректа в ТГ-канал, мы просто перенаправим.
         // Callback (POST) и редирект (GET) происходят почти одновременно.
-
-        $purchase = Purchase::where('order_id', $request->orderid)->first();
-
-        if ($purchase && $purchase->status !== 'failed') {
-            $telegramLink = config('app.telegram_channel_link');
-            // Перенаправление пользователя в Telegram-канал
-            Log::info('PayKeeper: User redirected to Telegram channel.');
-            return redirect()->away($telegramLink);
-        } elseif (empty($purchase) || $purchase->status === 'failed') {
-            abort(404);
-        }
+        
+        $telegramLink = config('app.telegram_channel_link');
+        // Перенаправление пользователя в Telegram-канал
+        Log::info('PayKeeper: User redirected to Telegram channel.');
+        return redirect()->away($telegramLink);
     }
 }
