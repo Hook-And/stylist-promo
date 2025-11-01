@@ -160,14 +160,47 @@ class PayKeeperController extends Controller
      */
     public function success(Request $request)
     {
-        // В идеале, здесь нужно проверить, что заказ, который оплачивал пользователь, 
-        // уже получил статус 'success' от callback-а.
-        // Однако, для моментального редиректа в ТГ-канал, мы просто перенаправим.
-        // Callback (POST) и редирект (GET) происходят почти одновременно.
-        
-        $telegramLink = config('app.telegram_channel_link');
-        // Перенаправление пользователя в Telegram-канал
-        Log::info('PayKeeper: User redirected to Telegram channel.');
-        return redirect()->away($telegramLink);
+        $botToken = '7958020272:AAFIr2RCIEcAEYvTUTaQd0r98A3MJYG8zyA'; // Замените на реальный токен
+        $channelId = -1002519574252; // Замените на реальный ID канала (с -100...)
+
+        // URL для Telegram API
+        $url = "https://api.telegram.org/bot{$botToken}/createChatInviteLink";
+
+        // Параметры: одноразовая ссылка, истекает через 24 часа (86400 секунд)
+        $expiresDate = time() + 3600; // Можно изменить на другой срок, например 3600 для 1 часа
+
+        $payload = [
+            'chat_id' => $channelId,
+            'member_limit' => 1, // Одноразовая (после 1 присоединения деактивируется)
+            'expires_date' => $expiresDate,
+            // Опционально: 'name' => 'Invite for user ' . $user->id, // Для отслеживания
+        ];
+
+        try {
+            // Отправляем POST-запрос
+            $response = Http::withOptions([
+                'curl' => [
+                    CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4, // принудительно IPv4
+                ],
+                'timeout' => 20, // можно увеличить при необходимости
+            ])->post($url, $payload);
+            $data = $response->json();
+
+            if ($data['ok']) {
+                $inviteLink = $data['result']['invite_link'];
+                return redirect()->away($inviteLink);
+            } else {
+                // Ошибка от Telegram
+                Log::error('Telegram API error: ' . $data['description']);
+                abort(404);
+            }
+        } catch (RequestException $e) {
+            // Ошибка запроса (например, сеть или неверный токен)
+            Log::error('Telegram request failed: ' . $e->getMessage());
+            abort(404);
+        }
+
+        // Если что-то пошло не так, fallback
+        abort(404);
     }
 }

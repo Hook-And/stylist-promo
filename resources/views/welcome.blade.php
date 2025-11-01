@@ -134,5 +134,26 @@
             </div>
         </div>
     </footer>
+    <script>
+        // Функция для установки высоты
+        function setHeaderHeight() {
+            // Получаем текущую высоту видового экрана в пикселях
+            const vh = window.innerHeight;
+            
+            // Находим элемент .header
+            const header = document.querySelector('.header');
+            
+            if (header) {
+                // Устанавливаем высоту элемента в пикселях
+                header.style.minHeight = `${vh}px`;
+            }
+        }
+
+        // 1. Устанавливаем высоту при загрузке страницы
+        setHeaderHeight();
+
+        // 2. Устанавливаем высоту при изменении размера окна (например, при повороте телефона)
+        window.addEventListener('resize', setHeaderHeight);
+    </script>
 </body>
 </html>
