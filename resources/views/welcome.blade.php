@@ -69,7 +69,7 @@
                     <h3>{{ \App\Models\SiteContent::get('content_item_5') }}</h3>
                     <ul class="sub-list">
                         <li>Ответы на вопросы в комментариях</li>
-                        <li>Скидка на мои услуги 30%</li>
+                        <li>Скидка на мои услуги 30% до 31 декабря 2025 года</li>
                     </ul>
                 </div>
             </div>

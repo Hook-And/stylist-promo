@@ -38,7 +38,7 @@ class PayKeeperController extends Controller
             ]);
         } catch (\Exception $e) {
             Log::error('PayKeeper: Failed to save purchase to DB.', ['error' => $e->getMessage()]);
-            return back()->with('error', 'Ошибка при создании заказа. Попробуйте позже.');
+            abort(404);
         }
 
         // 4. Запрос к PayKeeper API
@@ -50,6 +50,9 @@ class PayKeeperController extends Controller
                 ->post("{$serverUrl}/info/settings/token/");
         $data = $tokenResponse->json();
         $securityToken = $data['token'];
+        if (empty($securityToken)) {
+            abort(404);
+        }
         $requestData = [
             'pay_amount' => number_format($payAmount, 2, '.', ''),
             'orderid' => $orderId,
@@ -71,7 +74,7 @@ class PayKeeperController extends Controller
 
             if ($response->successful() && isset($data['invoice_id'])) {
                 $invoiceId = $data['invoice_id'];
-                $paymentLink = "{$serverUrl}/bill/{$invoiceId}?pstype=sbp_default";
+                $paymentLink = "{$serverUrl}/bill/{$invoiceId}/";
 
                 Log::info("PayKeeper: Payment initiated for Order ID: {$orderId}, Invoice ID: {$invoiceId}");
 
@@ -81,13 +84,13 @@ class PayKeeperController extends Controller
             } else {
                 Log::error('PayKeeper: Failed to get payment link.', ['response' => $data]);
                 $purchase->update(['status' => 'failed']); 
-                return back()->with('error', 'Не удалось создать платеж. Попробуйте позже.');
+                abort(404);
             }
 
         } catch (\Exception $e) {
             Log::error('PayKeeper: Exception during payment initiation.', ['error' => $e->getMessage()]);
             $purchase->update(['status' => 'failed']);
-            return back()->with('error', 'Произошла ошибка при обращении к платежной системе.');
+            abort(404);
         }
     }
 
@@ -162,10 +165,15 @@ class PayKeeperController extends Controller
         // Однако, для моментального редиректа в ТГ-канал, мы просто перенаправим.
         // Callback (POST) и редирект (GET) происходят почти одновременно.
 
-        $telegramLink = config('app.telegram_channel_link');
-        
-        // Перенаправление пользователя в Telegram-канал
-        Log::info('PayKeeper: User redirected to Telegram channel.');
-        return redirect()->away($telegramLink);
+        $purchase = Purchase::where('order_id', $request->orderid)->first();
+
+        if ($purchase && $purchase->status !== 'failed') {
+            $telegramLink = config('app.telegram_channel_link');
+            // Перенаправление пользователя в Telegram-канал
+            Log::info('PayKeeper: User redirected to Telegram channel.');
+            return view('redirect', compact('telegramLink'));
+        } elseif (empty($purchase) || $purchase->status === 'failed') {
+            abort(404);
+        }
     }
 }
