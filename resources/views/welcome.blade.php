@@ -171,7 +171,7 @@
         setHeaderHeight();
 
         // 2. Устанавливаем высоту при изменении размера окна (например, при повороте телефона)
-        window.addEventListener('resize', setHeaderHeight);
+        window.addEventListener('orientationchange', setHeaderHeight);
     </script>
 </body>
 </html>
