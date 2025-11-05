@@ -15,6 +15,7 @@ class AdminController extends Controller
     {
         $sections = [
             'header' => 'Заголовок',
+            'about' => 'Обо мне',
             'purpose' => 'Цель канала',
             'content' => 'Содержание',
             'purchase' => 'Покупка',

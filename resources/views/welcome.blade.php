@@ -14,10 +14,28 @@
     <header class="header">
         <h1>{{ \App\Models\SiteContent::get('header_title') }}</h1>
         <p class="subtitle">{{ \App\Models\SiteContent::get('header_subtitle') }}</p>
-        <p class="quote">{{ \App\Models\SiteContent::get('header_quote') }}</p>
-        <p class="description">{{ \App\Models\SiteContent::get('header_description') }}</p>
+        <p class="purpose-text">{{ \App\Models\SiteContent::get('header_quote_1') }}</p>
+        <p class="purpose-text">{{ \App\Models\SiteContent::get('header_quote_2') }}</p>
+        <p class="purpose-text">{{ \App\Models\SiteContent::get('header_quote_3') }}</p>
         <a href="#purchase" class="btn">Купить</a>
     </header>
+
+    <!-- About me Section -->
+    <section class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <img src="/img/me.jpg" />
+            </div>
+            <div class="about-content">
+                <h2>{{ \App\Models\SiteContent::get('about_title') }}</h2>
+                <div class="purpose-text">{{ \App\Models\SiteContent::get('about_text_1') }}</div>
+                <div class="purpose-text">{{ \App\Models\SiteContent::get('about_text_2') }}</div>
+                <div class="purpose-text">{{ \App\Models\SiteContent::get('about_text_3') }}</div>
+                <div class="purpose-text">{{ \App\Models\SiteContent::get('about_text_4') }}</div>
+                <div class="purpose-text">{{ \App\Models\SiteContent::get('about_text_5') }}</div>
+            </div>
+        </div>
+    </section>
 
     <!-- Purpose Section -->
     <section class="purpose-section">
@@ -28,10 +46,8 @@
                 <div class="purpose-text">{{ \App\Models\SiteContent::get('purpose_text_2') }}</div>
                 <div class="purpose-text">{{ \App\Models\SiteContent::get('purpose_text_3') }}</div>
                 <div class="purpose-text">{{ \App\Models\SiteContent::get('purpose_text_4') }}</div>
-                <div class="purpose-item">{{ \App\Models\SiteContent::get('purpose_item_1') }}</div>
-                <div class="purpose-item">{{ \App\Models\SiteContent::get('purpose_item_2') }}</div>
-                <div class="purpose-item">{{ \App\Models\SiteContent::get('purpose_item_3') }}</div>
-                <div class="purpose-item">{{ \App\Models\SiteContent::get('purpose_item_4') }}</div>
+                <div class="purpose-text">{{ \App\Models\SiteContent::get('purpose_text_5') }}</div>
+                <div class="purpose-text">{{ \App\Models\SiteContent::get('purpose_text_6') }}</div>
             </div>
             <div style="text-align: center; margin-top: 50px;">
                 <a href="#purchase" class="btn">Купить</a>
