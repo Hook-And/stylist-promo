@@ -32,7 +32,7 @@ class SiteContentSeeder extends Seeder
             ['key' => 'purpose_text_2', 'value' => 'Соберете функциональный гардероб, где каждая вещь будет часто использоваться.', 'type' => 'text', 'section' => 'purpose', 'description' => 'Текст раздела'],
             ['key' => 'purpose_text_3', 'value' => 'Если вы пока не готовы работать со стилистом, то гайд это отличный вариант, чтобы обновить ваш гардероб.', 'type' => 'text', 'section' => 'purpose', 'description' => 'Текст раздела'],
             ['key' => 'purpose_text_4', 'value' => 'Сэкономите часы на походы по магазинам.', 'type' => 'text', 'section' => 'purpose', 'description' => 'Текст раздела'],
-            ['key' => 'purpose_text_5', 'value' => 'Гайд - это отличный подарок для вашей подруги, мамы, сестры и тд (для оформления подарка пишите на почту magdapikland@gmail.com).', 'type' => 'text', 'section' => 'purpose', 'description' => 'Текст раздела'],
+            ['key' => 'purpose_text_5', 'value' => 'Гайд - это отличный подарок для вашей подруги, мамы, сестры и тд (для оформления подарка пишите на почту magda.stylist@mail.ru).', 'type' => 'text', 'section' => 'purpose', 'description' => 'Текст раздела'],
             ['key' => 'purpose_text_6', 'value' => 'С помощью гайда вы откроете для себя новые бренды и магазины, о которых ранее могли не слышать - в нем представлены самые актуальные российские и зарубежные бренды.', 'type' => 'text', 'section' => 'purpose', 'description' => 'Текст раздела'],
 
             // Content Section
@@ -53,13 +53,13 @@ class SiteContentSeeder extends Seeder
             ['key' => 'purchase_note', 'value' => 'После оплаты вас сразу перебросит в Telegram-канал, не закрывайте страницу!', 'type' => 'text', 'section' => 'purchase', 'description' => 'Важное замечание'],
             ['key' => 'purchase_price_1', 'value' => '5000 ₽', 'type' => 'text', 'section' => 'purchase', 'description' => 'Цена 1 месяца'],
             ['key' => 'purchase_payment_methods', 'value' => 'Способ оплаты: СБП', 'type' => 'text', 'section' => 'purchase', 'description' => 'Способы оплаты'],
-            ['key' => 'purchase_email', 'value' => 'magdapikland@gmail.com', 'type' => 'email', 'section' => 'purchase', 'description' => 'Email для вопросов'],
+            ['key' => 'purchase_email', 'value' => 'magda.stylist@mail.ru', 'type' => 'email', 'section' => 'purchase', 'description' => 'Email для вопросов'],
 
             // Footer Section
             ['key' => 'footer_company_name', 'value' => 'ИП Ефремова М. А.', 'type' => 'text', 'section' => 'footer', 'description' => 'Название компании'],
             ['key' => 'footer_inn', 'value' => 'ИНН 771553631885', 'type' => 'text', 'section' => 'footer', 'description' => 'ИНН'],
             ['key' => 'footer_ogrn', 'value' => 'ОГРНИП 324774600601827', 'type' => 'text', 'section' => 'footer', 'description' => 'ОГРНИП'],
-            ['key' => 'footer_email', 'value' => 'magdapikland@gmail.com', 'type' => 'email', 'section' => 'footer', 'description' => 'Email'],
+            ['key' => 'footer_email', 'value' => 'magda.stylist@mail.ru', 'type' => 'email', 'section' => 'footer', 'description' => 'Email'],
             ['key' => 'footer_telegram_link', 'value' => 'https://t.me/magdalena_velikaya', 'type' => 'link', 'section' => 'footer', 'description' => 'Ссылка на Telegram-канал'],
             ['key' => 'footer_telegram_text', 'value' => 'Magdalena Velikaya', 'type' => 'text', 'section' => 'footer', 'description' => 'Текст ссылки на Telegram-канал'],
             ['key' => 'footer_privacy_link', 'value' => '/personal_data.pdf', 'type' => 'link', 'section' => 'footer', 'description' => 'Ссылка на политику конфиденциальности'],
