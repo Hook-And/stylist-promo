@@ -75,7 +75,7 @@ class PayKeeperController extends Controller
             if ($response->successful() && isset($data['invoice_id'])) {
                 $invoiceId = $data['invoice_id'];
                 $paymentLink = "{$serverUrl}/bill/{$invoiceId}/";
-
+                $purchase->update(['invoice_id' => $invoiceId]);
                 Log::info("PayKeeper: Payment initiated for Order ID: {$orderId}, Invoice ID: {$invoiceId}");
 
                 // Перенаправление пользователя на страницу оплаты PayKeeper
@@ -202,5 +202,57 @@ class PayKeeperController extends Controller
 
         // Если что-то пошло не так, fallback
         abort(404);
+    }
+
+    /**
+     * Выдаёт ссылку при ошибке редиректа paykeeper.
+     * Здесь происходит перенаправление в Telegram-канал.
+     */
+    public function recover(Request $request)
+    {
+        // 1. Валидация данных пользователя
+        $validatedData = $request->validate([
+            'email' => 'required|email|max:255',
+        ]);
+        $existingPurchase = Purchase::where('email', $validatedData['email'])->first();
+
+        if (empty($existingPurchase->invoice_id)) {
+            return redirect()
+                ->back() // Перенаправляет обратно на предыдущую страницу (форму)
+                ->with('error', 'Введенный адрес электронной почты неверен или по нему не найдены данные о платеже. Пожалуйста, проверьте его.');
+        }
+
+        if (strtotime($existingPurchase->created_at) < (time() - 1800)) { // Проверяем что с момента создания платежа прошло меньше 30 минут, чтобы избежать повторного получения ссылки-приглашения бесплатно
+            return redirect()
+                ->back() // Перенаправляет обратно на предыдущую страницу (форму)
+                ->with('error', 'Клиент с данной почтой уже получил и воспользовался ссылкой-приглашением.');
+        }
+
+        // 2. Запрос к PayKeeper API
+        $serverUrl = config('app.paykeeper_server');
+        $login = config('app.paykeeper_login');
+        $password = config('app.paykeeper_password');
+        $tokenResponse = $response = Http::withBasicAuth($login, $password)
+                ->post("{$serverUrl}/info/settings/token/");
+        $data = $tokenResponse->json();
+        $securityToken = $data['token'];
+        if (empty($securityToken)) {
+            abort(404);
+        }
+
+        $statusResponse = Http::withBasicAuth($login, $password)
+        ->get("{$serverUrl}/info/invoice/byid", [
+            'id' => $existingPurchase->invoice_id,
+            'security_token' => $securityToken, // Используем динамический токен
+        ]);
+
+        $jsonResponse = $statusResponse->json();
+        if (empty($jsonResponse["status"]) || $jsonResponse["status"] !== 'paid') {
+            return redirect()
+                ->back() // Перенаправляет обратно на предыдущую страницу (форму)
+                ->with('error', 'Данные о платеже не найдены в системе оплаты или платёж не прошёл. Если вы уверены, что платёж верен, пожалуйста, напишите нам на почту');
+        } else {
+            return redirect()->away(route('paykeeper.success'));
+        }
     }
 }

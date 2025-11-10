@@ -11,6 +11,19 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
+    {{-- Блок для отображения Flash-сообщений --}}
+    @if (session('success'))
+        <div style='width: 100%; text-align: center; color: green; margin: 100px 0;'>
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div style='width: 100%; text-align: center; color: red; margin: 100px 0;'>
+            {{ session('error') }}
+        </div>
+    @endif
+    
     <!-- Header Section -->
     <header class="header">
         <h1>{{ \App\Models\SiteContent::get('header_title') }}</h1>
@@ -128,6 +141,15 @@
                     <input type="email" id="email" name="email" required>
                 </div>
                 <button type="submit" class="btn">Оплатить</button>
+            </form>
+            <p style="text-align: left; margin: 30px 0; color: #999; font-size: 0.95rem;">Если вы оплатили доступ и получили чек, но по какой-то причине не получили доступ к телеграмм-каналу, впишите ниже почту, на которую оформлялся платёж и вы получите ссылку-приглашение:</p>
+            <form action="{{ route('paykeeper.recover') }}" method="POST" class="purchase-form">
+                @csrf
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <button type="submit" class="btn">Отправить</button>
             </form>
             <p style="margin-top: 30px; color: #999; font-size: 0.95rem;">Если остались вопросы: <a href="mailto:{{ \App\Models\SiteContent::get('purchase_email') }}" style="color: #fff; text-decoration: underline;">{{ \App\Models\SiteContent::get('purchase_email') }}</a></p>
         </div>

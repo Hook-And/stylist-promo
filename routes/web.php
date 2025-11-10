@@ -13,6 +13,7 @@ Route::get('/', function () {
 Route::post('/pay/form', [PayKeeperController::class, 'initPayment'])->name('paykeeper.init');
 Route::post('/pay/callback', [PayKeeperController::class, 'callback'])->name('paykeeper.callback');
 Route::get('/pay/success', [PayKeeperController::class, 'success'])->name('paykeeper.success');
+Route::post('/pay/recover', [PayKeeperController::class, 'recover'])->name('paykeeper.recover');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
