@@ -172,7 +172,7 @@ class PayKeeperController extends Controller
         $payload = [
             'chat_id' => $channelId,
             'member_limit' => 1, // Одноразовая (после 1 присоединения деактивируется)
-            'expiration_date' => $expiresDate,
+            'expire_date' => $expiresDate,
             // Опционально: 'name' => 'Invite for user ' . $user->id, // Для отслеживания
         ];
 
