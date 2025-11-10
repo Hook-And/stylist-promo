@@ -167,7 +167,7 @@ class PayKeeperController extends Controller
         $url = "https://api.telegram.org/bot{$botToken}/createChatInviteLink";
 
         // Параметры: одноразовая ссылка, истекает через 24 часа (86400 секунд)
-        $expiresDate = time() + 3600; // Можно изменить на другой срок, например 3600 для 1 часа
+        $expiresDate = time() + 300; // Можно изменить на другой срок, например 3600 для 1 часа
 
         $payload = [
             'chat_id' => $channelId,
