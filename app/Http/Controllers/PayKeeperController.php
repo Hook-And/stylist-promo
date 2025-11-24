@@ -100,6 +100,8 @@ class PayKeeperController extends Controller
      */
     public function callback(Request $request)
     {
+        Log::info("PayKeeper: callback SUCCESS access");
+
         // PayKeeper всегда отправляет POST-запрос для Callback
         if (!$request->isMethod('POST')) {
             return response('Method Not Allowed', 405);
@@ -214,15 +216,17 @@ class PayKeeperController extends Controller
         $validatedData = $request->validate([
             'email' => 'required|email|max:255',
         ]);
-        $existingPurchase = Purchase::where('email', $validatedData['email'])->first();
+        $existingPurchase = Purchase::where('email', $validatedData['email'])->latest()->first();
 
         if (empty($existingPurchase->invoice_id)) {
+            Log::error('Recover failed on our side because of email:' . $validatedData['email'] . ', purchase info: ' . var_export(get_object_vars($existingPurchase), true));
             return redirect()
                 ->back() // Перенаправляет обратно на предыдущую страницу (форму)
                 ->with('error', 'Введенный адрес электронной почты неверен или по нему не найдены данные о платеже. Пожалуйста, проверьте его.');
         }
 
         if (strtotime($existingPurchase->created_at) < (time() - 1800)) { // Проверяем что с момента создания платежа прошло меньше 30 минут, чтобы избежать повторного получения ссылки-приглашения бесплатно
+            Log::error('Recover failed on our side because of email TIMEOUT:' . $validatedData['email'] . ', purchase info: ' . var_export(get_object_vars($existingPurchase), true));
             return redirect()
                 ->back() // Перенаправляет обратно на предыдущую страницу (форму)
                 ->with('error', 'Клиент с данной почтой уже получил и воспользовался ссылкой-приглашением.');
@@ -248,6 +252,7 @@ class PayKeeperController extends Controller
 
         $jsonResponse = $statusResponse->json();
         if (empty($jsonResponse["status"]) || $jsonResponse["status"] !== 'paid') {
+            Log::error('Recover failed on PayKeeper side because of payment status, email:' . $validatedData['email'] . ', response info: ' . var_export($jsonResponse, true));
             return redirect()
                 ->back() // Перенаправляет обратно на предыдущую страницу (форму)
                 ->with('error', 'Данные о платеже не найдены в системе оплаты или платёж не прошёл. Если вы уверены, что платёж верен, пожалуйста, напишите нам на почту');
