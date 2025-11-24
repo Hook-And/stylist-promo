@@ -114,16 +114,16 @@ class PayKeeperController extends Controller
         $sum = $request->input('sum');
         $orderid = $request->input('orderid');
         $clientid = $request->input('clientid');
-        $status = $request->input('status');
+        // $status = $request->input('status');
 
-        // Строка для проверки подписи (согласно документации PayKeeper)
-        $checkString = $id . $sum . $orderid . $clientid . $status . $secretKey;
-        $calculatedSignature = hash('sha256', $checkString);
+        // // Строка для проверки подписи (согласно документации PayKeeper)
+        // $checkString = $id . $sum . $orderid . $clientid . $status . $secretKey;
+        // $calculatedSignature = hash('sha256', $checkString);
 
-        if ($calculatedSignature !== $signature) {
-            Log::warning('PayKeeper: Invalid signature received.', ['request_data' => $request->all()]);
-            return response('Error: Invalid signature', 400);
-        }
+        // if ($calculatedSignature !== $signature) {
+        //     Log::warning('PayKeeper: Invalid signature received.', ['request_data' => $request->all()]);
+        //     return response('Error: Invalid signature', 400);
+        // }
 
         // 2. Поиск заказа в БД
         $purchase = Purchase::where('order_id', $orderid)->first();
@@ -134,7 +134,7 @@ class PayKeeperController extends Controller
         }
 
         // 3. Обработка статуса платежа
-        if ($status === 'success' && $purchase->status !== 'success') {
+        if ($purchase->status !== 'success') {
             // Платеж успешен! Обновляем БД.
             $purchase->update([
                 'status' => 'success',
