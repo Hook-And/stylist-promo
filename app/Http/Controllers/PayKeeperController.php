@@ -168,7 +168,7 @@ class PayKeeperController extends Controller
                 $clientName = $purchase->name;
                 $email = $purchase->email;
                 // Формируем тело письма заранее
-                $body = "*{$clientName}*, вам предоставлен доступ в телеграмм канал: *{$inviteLink}*";
+                $body = "{$clientName}, вам предоставлен доступ в телеграмм канал: {$inviteLink}";
 
                 Mail::send([], [], function ($message) use ($email, $clientName, $inviteLink, $body) {
                     $message->to($email)
