@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use App\Models\Purchase; 
 use Carbon\Carbon;
 
@@ -61,7 +63,7 @@ class PayKeeperController extends Controller
             'client_phone' => $validatedData['phone'], 
             'clientid' => $validatedData['name'],   
             // *** ОПТИМАЛЬНО: client_return_url ведет на отдельный маршрут success ***
-            'client_return_url' => route('paykeeper.success'), 
+            'client_return_url' => url('/'), 
             'token' => $securityToken,
         ];
 
@@ -140,6 +142,44 @@ class PayKeeperController extends Controller
                 'status' => 'success',
                 'paid_at' => Carbon::now(),
             ]);
+
+            $botToken = '7958020272:AAFIr2RCIEcAEYvTUTaQd0r98A3MJYG8zyA'; // Замените на реальный токен
+            $channelId = -1002519574252; // Замените на реальный ID канала (с -100...)
+
+            // URL для Telegram API
+            $url = "https://api.telegram.org/bot{$botToken}/createChatInviteLink";
+
+            $payload = [
+                'chat_id' => $channelId,
+                'member_limit' => 1, // Одноразовая (после 1 присоединения деактивируется)
+                // Опционально: 'name' => 'Invite for user ' . $user->id, // Для отслеживания
+            ];
+            // Отправляем POST-запрос
+            $response = Http::withOptions([
+                'curl' => [
+                    CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4, // принудительно IPv4
+                ],
+                'timeout' => 20, // можно увеличить при необходимости
+            ])->post($url, $payload);
+            $data = $response->json();
+
+            if ($data['ok']) {
+                $inviteLink = $data['result']['invite_link'];
+                $clientName = $purchase->name;
+                $email = $purchase->email;
+                // Формируем тело письма заранее
+                $body = "*{$clientName}*, вам предоставлен доступ в телеграмм канал: *{$inviteLink}*";
+
+                Mail::send([], [], function ($message) use ($email, $clientName, $inviteLink, $body) {
+                    $message->to($email)
+                            ->subject('Ваш доступ к Telegram-каналу')
+                            ->from(config('mail.from.address'), config('mail.from.name'))
+                            ->text($body); // Plain-text тело
+                });
+            } else {
+                // Ошибка от Telegram
+                Log::error('Telegram API error: ' . $data['description']);
+            }
 
             Log::info("PayKeeper: Payment SUCCESS for Order ID: {$orderid}. DB updated.");
         } else if ($status === 'refunded' && $purchase->status !== 'refunded') {

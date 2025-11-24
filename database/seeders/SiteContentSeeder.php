@@ -50,7 +50,7 @@ class SiteContentSeeder extends Seeder
             ['key' => 'purchase_info_1', 'value' => 'Получите онлайн-стилиста в кармане на 2 месяца (в этот период времени я отвечаю на все ваши вопросы и запросы в рамках гайда)', 'type' => 'text', 'section' => 'purchase', 'description' => 'Информация 1'],
             ['key' => 'purchase_info_2', 'value' => 'Пополнение гайда - до 31.12.25.', 'type' => 'text', 'section' => 'purchase', 'description' => 'Информация 2'],
             ['key' => 'purchase_info_3', 'value' => 'Доступ бессрочный. Вы сможете находиться в нем сколько угодно', 'type' => 'text', 'section' => 'purchase', 'description' => 'Информация 3'],
-            ['key' => 'purchase_note', 'value' => 'После оплаты вас сразу перебросит в Telegram-канал, не закрывайте страницу!', 'type' => 'text', 'section' => 'purchase', 'description' => 'Важное замечание'],
+            ['key' => 'purchase_note', 'value' => 'После оплаты вам на почту придёт ссылка на Telegram-канал', 'type' => 'text', 'section' => 'purchase', 'description' => 'Важное замечание'],
             ['key' => 'purchase_price_1', 'value' => '5000 ₽', 'type' => 'text', 'section' => 'purchase', 'description' => 'Цена 1 месяца'],
             ['key' => 'purchase_payment_methods', 'value' => 'Способ оплаты: СБП', 'type' => 'text', 'section' => 'purchase', 'description' => 'Способы оплаты'],
             ['key' => 'purchase_email', 'value' => 'magda.stylist@mail.ru', 'type' => 'email', 'section' => 'purchase', 'description' => 'Email для вопросов'],
